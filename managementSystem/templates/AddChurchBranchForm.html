@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+      <title>ZCC Sunday School</title>
+      <link rel="stylesheet" href="{% static 'style.css' %}">  
+  </head>
+<body>
+
+  <div class="form-popup" >
+    <form name="populateForm" onsubmit="myFunction()" action="{% url 'AddChurchBranch' %}" method="POST">
+      <h3>Add Church Branch</h3>
+      {% csrf_token %}
+      <input class="field" type="text" placeholder="Branch Name" name="branch_name" required>
+      <input class="field" type="text" placeholder="FB Number" name="fb_number" required>
+      <input class="field" type="text" placeholder="Branch Head" name="branch_head" required>
+      <input class="field" type="text" placeholder="Centre Name" name="centre_name" required>
+      <p></p>
+      <input type="checkbox" id="" name="checkbox" value="checked">
+      
+      <label for="palce">Return to Form?</label>
+      <p></p>
+      <button   type="submit" style="width:100% ;" >Submit</button>
+  </form>
+  <a href="{% url 'ViewAllBranches' %}"><button style="width:12%;">Close Form </button></a>
+  </div>
+
+  <script>
+    function myFunction() {
+     
+    }
+
+    function myFunction() {
+      alert("Added Succesfully!,press Ok");
+    }
+    </script>
+
+</body>
+</html>

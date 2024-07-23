@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+      <title>ZCC Sunday School</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="{% static 'style.css' %}">  
+  </head>
+  {% if messages %}
+  {% for message in messages %}
+      <div style="text-align: center; position: absolute;width: 100%;" class="alert {{ message.tags }} m-2" id="msg" role="alert">
+          <Strong>{{ message }}</Strong>
+      </div>
+  {% endfor %}
+  {% endif %}
+    <body>
+      
+
+      <div class="form-popup" >
+        <form onsubmit="myFunction()" action="{% url 'AddTeacher' %}" method="POST">
+          <h3>Add new Teacher</h3>
+          <br></br>
+          {% csrf_token %}
+          <input class="field" type="text" placeholder="Surname and Name" name="full_name" required>
+          <select class="field" name="gender" required>
+            <option value="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <input class="field" type="text" pattern="[0-9]{13}" title="Invalid Id Number" maxlength="13" placeholder="ID Number" name="id_number" required>
+          <input class="field" type="text" placeholder="Place" name="place" required>
+          <p></p>
+          <input type="checkbox" id="" name="checkbox" value="checked">
+          <label for="palce">Return to Form?</label>
+          <p></p>
+          <button   type="submit" style="width:100% ;" >Submit</button>  </form>
+      </form>
+      <a href="{% url 'ViewAllTeachers' %}"><button style="width:12%;">Close Form </button></a>
+      </div>
+
+      <script>
+        setTimeout(function(){
+          if ($('#msg').length > 0) {
+            $('#msg').remove();
+          }
+        }, 3000)
+      </script>
+    </body>
+</html>
+
+

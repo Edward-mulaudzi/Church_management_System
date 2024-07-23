@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+      <title>ZCC Sunday School</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="{% static 'homeStyle.css' %}">  
+  </head>
+
+<body>
+  {% if logged_in_user == "superuser" %}
+    <div id="navbar">
+      <a href="{% url 'home' %}" class="active">Home</a>
+      <a href="{% url 'ViewAllBranches' %}">Branches</a>
+      <a href="{% url 'ViewAllUsers' %}">Add Users</a>
+      <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+    </div>
+  {% elif logged_in_user == "admin" %}
+    <div id="navbar">
+      <a href="{% url 'home' %}" class="active">Home</a>
+      <a href="{% url 'ViewAllStudents' %}">Learners</a>
+      <a href="{% url 'ViewAllTeachers' %}">Teachers</a>
+      <a href="{% url 'ViewAllCommitteeMembers' %}">Committee</a>
+      <a href="{% url 'ViewAllLCDC_Management' %}">LCDC_Management</a>
+      <a href="{% url 'AttendanceList' %}">Attendance</a>
+      <a href="{% url 'MonitoringTool' %}">Monitoring Tool</a>
+      <a href="{% url 'ViewAllUsers' %}">Add User</a>
+      <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+    </div>
+  {%else%}
+    <div id="navbar">
+      <a href="{% url 'home' %}" class="active">Home</a>
+      <a href="{% url 'ViewAllStudents' %}">Learners</a>
+      <a href="{% url 'ViewAllTeachers' %}">Teachers</a>
+      <a href="{% url 'ViewAllCommitteeMembers' %}">Committee</a>
+      <a href="{% url 'ViewAllLCDC_Management' %}">LCDC_Management</a>
+      <a href="{% url 'AttendanceList' %}">Attendance</a>
+      <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+       
+
+    </div>
+  {%endif%}
+  {% if logged_in_user == "superuser" %}
+  <div class="card1">
+    <h4>Sunday School Mornitoring Tool</h4>
+    <p>Matatshe Center</p>
+  </div>
+  {%else%}
+  <div class="card1">
+    <h4>Welcome to ,{{branch}} Sunday School</h4>
+    <p>FB Number:{{branch.fb_number}}</p>
+    <p>Head:{{branch.branch_head}}</p>
+  </div>
+
+  <a href="{% url 'ViewAllStudents' %}">
+    <div class="card">
+        <h4><b>Learners</b></h4>
+        {{ students_count }}
+        <p></p>
+    </div>
+  </a>
+
+  <a href="{% url 'ViewAllTeachers' %}">
+    <div class="card">
+        <h4><b>Teachers</b></h4>
+        {{ teachers_count }}
+        <p></p>
+    </div>
+  </a>
+
+  <a href="{% url 'ViewAllCommitteeMembers' %}">
+    <div class="card">
+        <h4><b>Committee</b></h4>
+        {{ committee_members_count }}
+        <p></p>
+    </div>
+  </a>
+
+  <a href="{% url 'ViewAllLCDC_Management' %}">
+    <div class="card">
+        <h4><b>LCDC Management</b></h4>
+        {{ LCDC_Management_count }}
+        <p></p>
+    </div>
+  </a>
+{%endif%}
+</body>
+</html>
+
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+ 
+<head>
+  <link rel="stylesheet" href="{% static 'attendanceStyle.css' %}">  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+ 
+<body>
+  <body>
+     
+    {% if logged_in_user == "superuser" %}
+    <div id="navbar">
+      <a href="{% url 'home' %}" >Home</a>
+      <a href="{% url 'ViewAllBranches' %}">Branches</a>
+      <a href="{% url 'ViewAllUsers' %}">Add User</a>
+      <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+    </div>
+  {% elif logged_in_user == "admin" %}
+    <div id="navbar">
+      <a href="{% url 'home' %}" class="active">Home</a>
+      <a href="{% url 'ViewAllStudents' %}">Learners</a>
+      <a href="{% url 'ViewAllTeachers' %}">Teachers</a>
+      <a href="{% url 'ViewAllCommitteeMembers' %}">Committee</a>
+      <a href="{% url 'ViewAllLCDC_Management' %}">LCDC_Management</a>
+      <a href="{% url 'AttendanceList' %}">Attendance</a>
+      <a href="{% url 'MonitoringTool' %}" >Monitoring Tool</a>
+      <a href="{% url 'ViewAllUsers' %}">Add User</a>
+      <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+    </div>
+  {%else%}
+    <div id="navbar">
+      <a href="{% url 'home' %}" class="active">Home</a>
+      <a href="{% url 'ViewAllStudents' %}">Learners</a>
+      <a href="{% url 'ViewAllTeachers' %}">Teachers</a>
+      <a href="{% url 'ViewAllCommitteeMembers' %}">Committee</a>
+      <a href="{% url 'ViewAllLCDC_Management' %}">LCDC_Management</a>
+      <a href="{% url 'AttendanceList' %}">Attendance</a>
+      <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+    </div>
+  {%endif%}
+
+      <input id="search" name="search" class="search" type="text" placeholder="Search here" value={{search}} >
+
+      
+
+      <p></p>
+      <h4 style="width:45%;margin-left: 1%; top:10%;position: absolute;">Attendance Rigister For : {{ date }}</h4>
+    <form name="startAttendanceForm" action="{% url 'AttendancePresent' %}" method="POST">
+      {% csrf_token %}
+      <button name="save_search" class="button_cls" type="submit" style="width:8%;margin-left: 26%; top:15%;position: absolute;" >Save</button>
+    <table id="customers" >
+      <tr id="myHeader">
+          <th></th>
+          <th>Name</th>
+          <th>Gander</th>
+          <th>Id Number</th>
+          <th>Role</th>
+          <th></th>
+          <th>Attendance Status</th>
+          <th>Date</th>
+        </tr>
+        <tbody id="table">
+          {% for attendance_member in attendance_members%}
+          <tr>
+            <td>{{ forloop.counter }} </td>
+            <td>{{ attendance_member.member.full_name }} </td>
+            <td>{{ attendance_member.member.gender }}</td>
+            <td>{{ attendance_member.member.id_number }}</td>
+            <td>{{ attendance_member.role }}</td>
+            <td> <input style="padding-left: 100px;" type="checkbox" name="checkAttendance[]" value="{{attendance_member.id}}"></td>
+          </form>
+            <td>{% if attendance_member.attendance == "Present" %}
+                  <h4 style="color:green">{{attendance_member.attendance}}</h4>
+                {% else %}
+                  <h4 style="color:red">{{attendance_member.attendance}}</h4>
+                {% endif %}</td>
+            <td>{{date}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function () {
+            $("#search").on("input", function () {
+                var value = $(this).val().toLowerCase();
+                $("#table tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</body>
+ 
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+<style>
+table, th, td {
+  border:1px solid black;
+}
+table, th, tr {
+  /* background-color: gray; */
+  color: black;
+
+}
+</style>
+<link rel="stylesheet" href="{% static 'homeStyle.css' %}"> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>  
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<body>
+
+  {% if logged_in_user == "superuser" %}
+      <div id="navbar">
+        <a href="{% url 'home' %}" class="active">Home</a>
+        <a href="{% url 'ViewAllBranches' %}">Branches</a>
+        <a href="{% url 'ViewAllUsers' %}">Add User</a>
+        <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+      </div>
+    {% elif logged_in_user == "admin" %}
+      <div id="navbar">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'ViewAllStudents' %}">Learners</a>
+        <a href="{% url 'ViewAllTeachers' %}">Teachers</a>
+        <a href="{% url 'ViewAllCommitteeMembers' %}">Committee</a>
+        <a href="{% url 'ViewAllLCDC_Management' %}">LCDC_Management</a>
+        <a href="{% url 'AttendanceList' %}">Attendance</a>
+        <a href="{% url 'MonitoringTool' %}" class="active">Monitoring Tool</a>
+        <a href="{% url 'ViewAllUsers' %}">Add User</a>
+        <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+      </div>
+    {%else%}
+      <div id="navbar">
+        <a href="{% url 'home' %}" class="active">Home</a>
+        <a href="{% url 'ViewAllStudents' %}">Learners</a>
+        <a href="{% url 'ViewAllTeachers' %}">Teachers</a>
+        <a href="{% url 'ViewAllCommitteeMembers' %}">Committee</a>
+        <a href="{% url 'ViewAllLCDC_Management' %}">LCDC_Management</a>
+        <a href="{% url 'AttendanceList' %}">Attendance</a>
+        <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+      </div>
+    {%endif%}
+
+<h2>Mornitoring Tool</h2>
+
+<table style="width:100%">
+  <tr id="myHeader">
+    <th></th>
+    <th>Activity</th>
+    <th>Yes/No</th>
+    <th>Comment</th>
+    <th>Action</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Availability of LCDC Education Managment File</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Is The Names of the LCDC education management area</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Availability of list of Sunday School committee</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><a href="#list of Sunday School committee"><button>View</button></a></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Availability of list of Sunday School teachers</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Availability of list of Sunday School leaners</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><a href="#list of Sunday School leaners"><button>View</button></a></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Is the menu for Sunday school learners</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><a href=""><button>View</button></a></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Availability of Sunday school teaching syllabus</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Availability of lthe lesson plan for Sunday school learners</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>Is there a timetable for Sunday school teaching</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>Is there a marksheet to record assessment activities for the Sunday school learners</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>Availability of learner attendance register</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><a href="#learner attendance register"><button>View</button></a></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>Availability of teacher attendance register</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>Is there a List of for grade 9 to 12 learners per grade</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>Availability of students at various tertiary institutions and their fields of study</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>Availability of the bursary application form as on the Z.C.C messenger</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>Is there a list of the bursary committee at branch level</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="Male">Yes</option>
+        <option value="Female">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>Database of ABET and skills development</td>
+    <td>
+      <select class="field" name="Yes/No" required>
+        <option value="">Yes/No</option>
+        <option value="">Yes</option>
+        <option value="">No</option>
+      </select>
+    </td>
+    <td><textarea></textarea></td>
+    <td><button>View</button></td>
+  </tr>
+</table>
+
+
+<div id="list of Sunday School leaners" class="modal">
+  <div  class="content">
+      
+        <table id="customers" style="margin-top: 9%">
+          <div style="color: green;position: fixed;background-color: white;height: 10%; width: 60%;padding-top: 10px;">
+            <h1 >Leaners: {{ students_count }}</h1>
+            <button class="button_cls" id="download" style="width:25%;margin-left: 65%; top:25%;position: absolute;">Download As PDF</button>
+            <a href="#" style="position: absolute;top: 10px;right: 10px;color: #fe0606;font-size: 30px;text-decoration: none;">&times;</a>
+          </div>
+          <tr id="myHeader">
+              <th></th>
+              <th>Name</th>
+              <th>Gander</th>
+              <th>Grade</th>
+              <th>Id Number</th>
+              <th>Place</th>
+              <th>Parent Contact</th>
+              <th>Branch Name</th>
+          </tr>
+          <tbody id="table">
+          {% for student in students %}
+            <tr><td>{{ forloop.counter }} </td>
+                <td>{{ student.member.full_name }}</td>
+                <td>{{ student.member.gender }}</td>
+                <td>{{ student.member.grade }}</td>
+                <td>{{ student.member.id_number }}</td>
+                <td>{{ student.member.place }}</td>
+                <td>{{ student.member.parent_contact }}</td>
+                <td>{{ student.branch }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+</div>
+</div>
+
+<div id="list of Sunday School committee" class="modal">
+  <div class="content">
+      <div style="color: green;position: fixed;background-color: white;height: 10%; width: 60%;padding-top: 10px;">
+        <h1 >committee members: {{ committee_members_count }}</h1>
+        <a href="#" style="position: absolute;top: 10px;right: 10px;color: #fe0606;font-size: 30px;text-decoration: none;">&times;</a>
+      </div>
+      <table id="customers" >
+        <tr id="myHeader">
+            <th></th>
+            <th>Name</th>
+            <th>Gander</th>
+            <th>Id Number</th>
+            <th>Place</th>
+            <th>Branch Name</th>
+        </tr>
+        <tbody id="table">
+        {% for committee_member in committee_members%}
+          <tr><td>{{ forloop.counter }}</td>
+              <td>{{ committee_member.member.full_name }}</td>
+              <td>{{ committee_member.member.gender }}</td>
+              <td>{{ committee_member.member.id_number }}</td>
+              <td>{{ committee_member.member.place }}</td>
+              <td>{{ committee_member.member.branch }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    </div>
+</div>
+
+<div id="learner attendance register" class="modal">
+    <div class="content">
+        <div style="color: green;position: fixed;background-color: white;height: 10%; width: 60%;padding-top: 10px;">
+          <h1 >Leaners Attendance Registers: {{ attendance_list_count }}</h1>
+          <a href="#" style="position: absolute;top: 10px;right: 10px;color: #fe0606;font-size: 30px;text-decoration: none;">&times;</a>
+        </div>
+        <table id="customers" >
+          <tr id="myHeader">
+              <th></th>
+              <th>Date</th>
+              <th>Learners</th>
+              <th>Action</th>
+          </tr>
+          <tbody id="table">
+          {% if attendance_list_count != "0" %}
+            {% for attendance in attendance_list%}
+              <tr>
+                <td>{{ forloop.counter }} </td>
+                <td>{% if current_date == attendance.date %}
+                      Today
+                    {% else %}
+                      {{attendance.date}}
+                    {% endif %}
+                </td>
+                <td> 
+                  <h4>Total : {{ attendance.students_total }}</h4>
+                  <h5 style="color:green">Present : {{ attendance.students_present }}</h5>
+                  <h5 style="color:red">Absent : {{ attendance.students_absent }}</h5>
+                </td>
+                  <td><a href="ViewSTudentAttendanceMornitoringTool/{{ attendance.id }}"><button type="submit" class="button_cls" style="width: 95%;">View List</button></a>
+              </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+          </tbody>
+      </table>  
+      </div>
+</div>
+
+<div id="View learner attendance register" class="modal">
+  <div class="content">
+      <div style="color: green;position: fixed;background-color: white;height: 10%; width: 60%;padding-top: 10px;">
+        <h1 >Leaners Attendance Registers: {{ attendance_list_count }}</h1>
+        <a href="#" style="position: absolute;top: 10px;right: 10px;color: #fe0606;font-size: 30px;text-decoration: none;">&times;</a>
+      </div>
+      <table id="customers" >
+        <tr id="myHeader">
+            <th></th>
+            <th>Name</th>
+            <th>Gander</th>
+            <th>Id Number</th>
+            <th>Role</th>
+            <th>Attendance Status</th>
+            <th>Date</th>
+        </tr>
+        <tbody id="table">
+        {% for attendance_member in attendance_members%}
+          <tr>
+            <td>{{ forloop.counter }} </td>
+            <td>{{ attendance_member.member.full_name }}</td>
+            <td>{{ attendance_member.member.gender }}</td>
+            <td>{{ attendance_member.member.id_number }}</td>
+            <td>{{ attendance_member.role }}</td>
+            <td>{% if attendance_member.attendance == "Present" %}
+                  <h4 style="color:green">{{attendance_member.attendance}}</h4>
+                {% else %}
+                  <h4 style="color:red">{{attendance_member.attendance}}</h4>
+                {% endif %}</td>
+            <td>{{date}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+  
+
+</body>
+</html>
+
+<script>
+  $("select").change(function(){
+    $("option:selected",this).text().trim().toLowerCase() == "yes/no" ? $(this).closest("tr").css("background-color","white") : $("option:selected",this).text().trim().toLowerCase() == "no" ? $(this).closest("tr").css("background-color","red").css("color","white") : $(this).closest("tr").css("background-color","green").css("color","white")
+
+  })
+
+  document.querySelector('#download').onclick = function(){
+    var element = document.querySelector('#customers');
+    html2pdf().from(element).save();
+  }
+</script>
+

@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+    <head>
+        <title>ZCC Sunday School</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{% static 'index.css' %}">  
+    </head>
+        <body>
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="text-align: center; position: absolute;width: 100%;" class="alert {{ message.tags }} m-2" id="msg" role="alert">
+                        <Strong>{{ message }}</Strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="background">
+                <div class="shape"></div>
+                <div class="shape"></div>
+            </div>
+            <form method="post">
+                <h3>Login Here</h3>
+
+                {% csrf_token %}
+                {{form.as_p}}
+
+                <button onClick="myFunc()">Log In</button>
+            </form>
+           
+            <script>
+                setTimeout(function(){
+                  if ($('#msg').length > 0) {
+                    $('#msg').remove();
+                  }
+                }, 3500)
+              </script>
+        </body>
+</html>

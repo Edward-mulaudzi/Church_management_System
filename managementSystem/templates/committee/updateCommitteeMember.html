@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+      <title>ZCC Sunday School</title>
+      <link rel="stylesheet" href="{% static 'style.css' %}">  
+  </head>
+    <body>
+      {% if messages %}
+      {% for message in messages %}
+          <div style="text-align: center;" class="alert {{ message.tags }} m-2" id="msg" role="alert">
+              <Strong>{{ message }}</Strong>
+          </div>
+      {% endfor %}
+      {% endif %}
+      
+      <div class="form-popup" >
+        <form onsubmit="myFunction()" action="" method="POST">
+          <h3>Update Committee Member</h3>
+          {% csrf_token %}
+          <input class="field" type="text" placeholder="Surname and Name" name="full_name" value="{{ committee_member_update.full_name }}" required>
+          <select class="field" name="gender" required>
+            <option value="{{ committee_member_update.gender }}">{{ committee_member_update.gender }}</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <input class="field" type="text" pattern="[0-9]{13}" title="Invalid Id Number" maxlength="13" placeholder="ID Number" name="id_number" value="{{ committee_member_update.id_number }}" required>
+          <input class="field" type="text" placeholder="Place" name="place" value="{{ committee_member_update.place }}" required>
+          <p></p>
+          <input type="checkbox" id="" name="checkbox" value="Yes">
+          <label for="palce">Return to Form?</label>
+          <p></p>
+          <button   type="submit" style="width:100% ;" >Submit</button>
+      </form>
+      <a href="{% url 'ViewAllCommitteeMembers' %}"><button style="width:12%;">Close Form </button></a>
+      </div>
+
+      <script>
+        setTimeout(function(){
+          if ($('#msg').length > 0) {
+            $('#msg').remove();
+          }
+        }, 3000)
+      </script>
+    </body>
+</html>
+
+

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+      <title>ZCC Sunday School</title>
+      <link rel="stylesheet" href="{% static 'viewAllStyle.css' %}">  
+      <link rel="stylesheet" href="{% static 'homeStyle.css' %}"> 
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+    <body>
+      {% if logged_in_user == "superuser" %}
+      <div id="navbar">
+        <a href="{% url 'home' %}" class="active">Home</a>
+        <a href="{% url 'ViewAllBranches' %}">Branches</a>
+        <a href="{% url 'ViewAllTeachers' %}">Add Users</a>
+        <a href="{% url 'Logout' %}" style="margin-left: 70%;">Logout</a>
+      </div>
+    {% elif logged_in_user == "admin" %}
+      <div id="navbar">
+        <a href="{% url 'home' %}" class="active">Home</a>
+        <a href="{% url 'ViewAllStudents' %}">Learners</a>
+        <a href="{% url 'ViewAllTeachers' %}">Teachers</a>
+        <a href="{% url 'ViewAllCommitteeMembers' %}">Committee</a>
+        <a href="{% url 'ViewAllSecurities' %}">Security</a>
+        <a href="{% url 'ViewAllHealthMembers' %}">Health</a>
+        <a href="{% url 'AttendanceList' %}">Attendance</a>
+        <a href="">Monitoring Tool</a>
+        <a href="">Add User</a>
+        <a href="{% url 'Logout' %}" style="position: absolute;top: 0px;right: 16px;">Sign Out</a>
+      </div>
+    {%else%}
+      <div id="navbar">
+        <a href="{% url 'home' %}" class="active">Home</a>
+        <a href="{% url 'ViewAllStudents' %}">Learners</a>
+        <a href="{% url 'ViewAllTeachers' %}">Teachers</a>
+        <a href="{% url 'ViewAllCommitteeMembers' %}">Committee</a>
+        <a href="{% url 'ViewAllSecurities' %}">Security</a>
+        <a href="{% url 'ViewAllHealthMembers' %}">Health</a>
+        <a href="{% url 'AttendanceList' %}">Attendance</a>
+        <a href="{% url 'Logout' %}" style="margin-left: 42%;">Logout</a>
+      </div>
+    {%endif%}
+  
+        {% csrf_token %}
+      <div >
+        <input id="search" class="search" type="text" placeholder="Search here" >
+        <a href="{% url 'AddHealthMemberForm' %}"><button style="width:12%;margin-left: 86%; top:15%;position: absolute;"><span>&#9783;</span> Add New</button></a>   
+        <p></p>
+        <h2 style="width:35%;margin-left: 1%; top:16%;position: absolute;">All Sunday School Health Members:{{ health_members_count }}</h2>
+      </div>
+
+      
+
+        <table id="customers" >
+            <tr id="myHeader">
+                <th></th>
+                <th>Name</th>
+                <th>Gander</th>
+                <th>Id Number</th>
+                <th>Place</th>
+                <th>Action</th>
+            </tr>
+            <tbody id="table">
+            {% for health_member in health_members%}
+              <tr><td>{{ forloop.counter }}</td>
+                  <td>{{ health_member.member.full_name }}</td>
+                  <td>{{ health_member.member.gender }}</td>
+                  <td>{{ health_member.member.id_number }}</td>
+                  <td>{{ health_member.member.place }}</td>
+                  <td><a href="deleteHealthMember/{{ health_member.id }}"><button style="width: 40%;">Delete</button></a>
+                      <a href="updateHealthMember/{{ health_member.id }}"><button style="width: 40%;">Update</button></a>
+                  </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <script>
+          $(document).ready(function () {
+              $("#search").on("keyup", function () {
+                  var value = $(this).val().toLowerCase();
+                  $("#table tr").filter(function () {
+                      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                  });
+              });
+          });
+      </script>
+    </body>
+  </html>
+
+

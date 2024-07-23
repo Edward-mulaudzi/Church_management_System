@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+      <title>ZCC Sunday School</title>
+      <link rel="stylesheet" href="{% static 'style.css' %}">  
+  </head>
+    <body>   
+      <div class="form-popup" >
+        <form onsubmit="myFunction()" action="" method="POST">
+          <h3>Update LCDC_Management</h3>
+          {% csrf_token %}
+          <input class="field" type="text" placeholder="Surname and Name" name="full_name" value="{{ LCDC_Management_update.full_name }}" required>
+          <select class="field" name="gender" required>
+            <option value="{{ LCDC_Management_update.gender }}">{{ LCDC_Management_update.gender }}</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <input class="field" type="text" pattern="[0-9]{13}" title="Invalid Id Number" maxlength="13" placeholder="ID Number" name="id_number" value="{{ LCDC_Management_update.id_number }}" required>
+          <input class="field" type="text" placeholder="Place" name="place" value="{{ LCDC_Management_update.place }}" required>
+          <p></p>
+          <input type="checkbox" id="" name="checkbox" value="Yes">
+          <label for="palce">Return to Form?</label>
+          <p></p>
+          <button   type="submit" style="width:100% ;" >Submit</button>
+      </form>
+      <a href="{% url 'ViewAllLCDC_Management' %}"><button style="width:12%;">Close Form </button></a>
+    </body>
+</html>
+
+

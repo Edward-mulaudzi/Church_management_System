@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+      <title>ZCC Sunday School</title>
+      <link rel="stylesheet" href="{% static 'style.css' %}">  
+  </head>
+    <body>
+      <div class="form-popup" >
+        <form onsubmit="myFunction()" action="" method="POST">
+          <h3>Update Student</h3>
+          {% csrf_token %}
+          <input class="field" type="text" placeholder="Surname and Name" name="full_name" value="{{ studentUpdate.full_name }}" required>
+          <select  class="field" name="gender" required>
+            <option value="{{ studentUpdate.gender }}">{{ studentUpdate.gender }}</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <select class="field" name="grade" required>
+            <option value="{{ studentUpdate.grade }}">{{ studentUpdate.grade }}</option>
+            <option value="Grade 0">Grade 0</option>
+            <option value="Grade 1">Grade 1</option>
+            <option value="Grade 2">Grade 2</option>
+            <option value="Grade 3">Grade 3</option>
+            <option value="Grade 4">Grade 4</option>
+            <option value="Grade 5">Grade 5</option>
+            <option value="Grade 6">Grade 6</option>
+            <option value="Grade 7">Grade 7</option>
+            <option value="Grade 8">Grade 8</option>
+            <option value="Grade 9">Grade 9</option>
+            <option value="Grade 10">Grade 10</option>
+            <option value="Grade 11">Grade 11</option>
+            <option value="Grade 12">Grade 12</option>
+            <option value="Not in High School">Not in High School</option>
+          </select>
+          <input class="field" type="text" pattern="[0-9]{13}" title="Invalid Id Number" maxlength="13" placeholder="ID Number" name="id_number" value="{{ studentUpdate.id_number }}" required>
+          <input class="field" type="text" placeholder="Place" name="place" value="{{ studentUpdate.place }}" required>
+          <input class="field" type="text" placeholder="Parent Contact" name="parent_contact" value="{{ studentUpdate.parent_contact }}" required>
+          <p></p>
+          <input type="checkbox" id="" name="checkbox" value="Yes">
+          <label for="palce">Return to Form?</label>
+          <p></p>
+          <button   type="submit" style="width:100% ;" >Submit</button>
+      </form>
+      <a href="{% url 'ViewAllStudents' %}"><button style="width:12%;">Close Form </button></a>
+      </div>
+    </body>
+</html>
+
+

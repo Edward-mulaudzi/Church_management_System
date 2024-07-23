@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  <head>
+      <title>ZCC Sunday School</title>
+      <link rel="stylesheet" href="{% static 'style.css' %}">  
+  </head>
+    <body>
+      <div class="form-popup" >
+        <form onsubmit="myFunction()" action="{% url 'AddHealthMember' %}" method="POST">
+          <h3>Add new Health Member</h3>
+          {% csrf_token %}
+          <input class="field" type="text" placeholder="Surname and Name" name="full_name" required>
+          <select class="field" name="gender" required>
+            <option value="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <input class="field" type="text" pattern="[0-9]{13}" title="Invalid Id Number" maxlength="13" placeholder="ID Number" name="id_number" required>
+          <input class="field" type="text" placeholder="Place" name="place" required>
+          <p></p>
+          <input type="checkbox" id="" name="checkbox" value="checked">
+          
+          <label for="palce">Return to Form?</label>
+          <p></p>
+          <button   type="submit" style="width:100% ;" >Submit</button>
+      </form>
+      <a href="{% url 'ViewAllHealthMembers' %}"><button style="width:12%;">Close Form </button></a>
+      </div>
+
+      <script>
+        function myFunction() {
+          alert("Added Succesfully!,press Ok");
+        }
+        </script>
+
+    </body>
+</html>
+
+
