@@ -76,13 +76,14 @@
     display: block;
     height: 35px;
     width: 100%;
-    background-color: rgba(255,255,255,0.07);
+    background-color: white;
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 8px;
     font-size: 14px;
     font-weight: 300;
-    border: 2px solid white;
+    border: 2px solid black;
+    color: black;
 
   }
   select{
@@ -102,7 +103,7 @@
 
   
   ::placeholder{
-    color: white;
+    color: rgb(82, 78, 78);
   }
   
   #customers {

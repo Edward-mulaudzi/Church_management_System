@@ -15,7 +15,7 @@ class User(AbstractUser):
     is_superuser= models.BooleanField('Is superuser', default=False)
     is_admin= models.BooleanField('Is admin', default=False)
     is_user= models.BooleanField('Is user', default=False)
-    branch = models.ForeignKey(church_branch, on_delete=models.CASCADE)
+    branch = models.ForeignKey(church_branch, on_delete=models.CASCADE,null=True)
 
 
 class church_member(models.Model):
@@ -25,7 +25,9 @@ class church_member(models.Model):
     id_number = models.CharField(max_length=13)
     place = models.CharField(max_length=150)
     parent_contact = models.CharField(max_length=150)
-    branch = models.ForeignKey(church_branch, on_delete=models.CASCADE,)
+    institution_name = models.CharField(max_length=150)
+    field_of_study = models.CharField(max_length=150)
+    branch = models.ForeignKey(church_branch, on_delete=models.CASCADE)
 
 
     def __str__(self):

@@ -27,7 +27,10 @@
         <option value="Male">Male</option>
         <option value="Female">Female</option>
       </select>
-      <select class="field" name="grade" required>
+      <input class="field" type="text" pattern="[0-9]{13}" title="Invalid Id Number" maxlength="13" placeholder="ID Number" name="id_number" required>
+      <input class="field" type="text" placeholder="Place" name="place" required>
+      <input class="field" type="text" placeholder="Parent Contact" name="parent_contact" required>
+      <select id="grade" class="field" name="grade" required onchange="toggleDiv()">
         <option value="">Grade</option>
         <option value="0">Grade 0</option>
         <option value="1">Grade 1</option>
@@ -42,12 +45,15 @@
         <option value="10">Grade 10</option>
         <option value="11">Grade 11</option>
         <option value="12">Grade 12</option>
-        <option value="Not in High School">Not in High School</option>
+        <option  value="Tertiary Institutions">Tertiary institutions</option>
+        <option value="Matriculated">Matriculated</option>
+        <option value="Not In school">Not In school</option>
       </select>
-      <input class="field" type="text" pattern="[0-9]{13}" title="Invalid Id Number" maxlength="13" placeholder="ID Number" name="id_number" required>
-      <input class="field" type="text" placeholder="Place" name="place" required>
-      <input class="field" type="text" placeholder="Parent Contact" name="parent_contact" required>
-      <p></p>
+      <div id="myDIV"> 
+        <input id="institu_name" class="field" type="text" placeholder="Institution Name" name="institution_name" >
+        <input id="study" class="field" type="text" placeholder="Field of study" name="field_of_study" >
+      </div>
+     
       <input type="checkbox" id="" name="checkbox" value="checked">
       
       <label for="palce">Return to Form?</label>
@@ -63,6 +69,20 @@
         $('#msg').remove();
       }
     }, 3500)
+
+    function toggleDiv() {
+      let grade = document.getElementById("grade").value;
+      let div1 = document.getElementById("myDIV");
+
+      if (grade === "Tertiary Institutions") {
+        div1.style.visibility = "visible";
+        document.getElementById("institu_name").required = true;
+        document.getElementById("study").required = true;
+      }
+      else {
+          div1.style.visibility = "hidden";
+      }
+    }
   </script>
 
 </body>

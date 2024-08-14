@@ -127,6 +127,8 @@ def AddStudent(request):
         id_number= request.POST['id_number']
         place= request.POST['place']
         parent_contact= request.POST['parent_contact']
+        institution_name= request.POST['institution_name']
+        field_of_study= request.POST['field_of_study']
         check_box =request.POST.get('checkbox')
 
         new_student= church_member(
@@ -136,6 +138,8 @@ def AddStudent(request):
             id_number = id_number,
             place = place,
             parent_contact = parent_contact,
+            institution_name=institution_name,
+            field_of_study=field_of_study,
             branch=request.user.branch
         )
         new_student.save()
