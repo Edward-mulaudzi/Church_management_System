@@ -15,8 +15,6 @@ global current_date
 current_date = datetime.date.today().strftime("%Y-%m-%d")
     
 
-
-
 def logged_in_user_function(request):
     global logged_in_user
     if request.user.is_superuser:
@@ -67,25 +65,6 @@ def SuperuserMonitoringTool(request,id):
         'students_count': students_count,
         'committee_members':committee_members,
         'committee_members_count': committee_members_count,
-        'logged_in_user':logged_in_user
-        })
-
-@login_required
-def MonitoringTool(request):
-    logged_in_user_function(request)
-    students = Role.objects.filter(role='Learner',branch=request.user.branch)
-    students_count = Role.objects.filter(role='Learner',branch=request.user.branch).count()
-    committee_members = Role.objects.filter(role='Committee',branch=request.user.branch)
-    committee_members_count = Role.objects.filter(role='Committee',branch=request.user.branch).count()
-    attendance_list_count = Attendance_List.objects.filter(branch=request.user.branch).count()
-    attendance_list = Attendance_List.objects.filter(branch=request.user.branch).order_by('-date').values()
-    return render(request, "MonitoringTool.html",{
-        'students':students,
-        'students_count': students_count,
-        'committee_members':committee_members,
-        'committee_members_count': committee_members_count,
-        'attendance_list_count':attendance_list_count,
-        'attendance_list':attendance_list,
         'logged_in_user':logged_in_user
         })
 
@@ -492,23 +471,6 @@ def ViewAttendance(request,id):
     })
 
 @login_required
-def ViewSTudentAttendanceMornitoringTool(request,id):
-    logged_in_user_function(request)
-    global attendance_date
-    attendance = Attendance_List.objects.get(id=id)
-    attendance_date = attendance.date
-
-    return render(request, "ViewAttendanceMonitoringTool.html",{
-        'attendance_members':Attendance.objects.filter(date=attendance_date,branch=request.user.branch,role='Learner'),
-        'present':Attendance.objects.filter(date=attendance_date,branch=request.user.branch,role='Learner',attendance='Present').count(),
-        'absent':Attendance.objects.filter(date=attendance_date,branch=request.user.branch,role='Learner',attendance='Absent').count(),
-        'date':attendance_date,
-        'logged_in_user':logged_in_user
-    })
-
-    
-
-@login_required
 def SelectAttendanceDate(request):
     logged_in_user_function(request)
     global filter_date
@@ -745,96 +707,3 @@ def deleteLCDC_Management(request,id):
     return render(request, "LCDC_Management/deleteLCDC_Management.html", {'logged_in_user':logged_in_user})
 
 ################################################################################################################
-
-
-
-
-
-
-
-@login_required(login_url='index')
-def AddHealthMemberForm(request):
-    return render(request, "health/AddHealthMemberForm.html")
-
-@login_required(login_url='index')
-def AddHealthMember(request):
-    if request.method == 'POST':
-        full_name = request.POST['full_name']
-        gender= request.POST['gender']
-        id_number= request.POST['id_number']
-        place= request.POST['place']
-        check_box =request.POST.get('checkbox')
-
-        new_health_member= church_member(
-            full_name = full_name,
-            gender = gender,
-            id_number = id_number,
-            place = place,
-            branch=request.user.branch
-        )
-        new_health_member.save()
-        role = Role(id=None,role="Health",structure='Sunday School',member=new_health_member)
-        role.save()
-        if check_box == "checked":
-            return render(request, "health/AddHealthMemberForm.html")
-        else:
-            return HttpResponseRedirect(reverse('ViewAllHealthMembers'))       
-
-@login_required(login_url='index')
-def ViewAllHealthMembers(request):
-    health_members = Role.objects.filter(role='Health')
-    health_members_count = Role.objects.filter(role='Health').count()
-    return render(request, "health/ViewAllHealthMembers.html",{
-        'health_members':health_members,
-        'health_members_count': health_members_count,
-    })
-
-@login_required(login_url='index')
-def updateHealthMember(request,id):
-    health_member_update = church_member.objects.get(id=id)
-    if request.method == 'POST':
-        full_name = request.POST['full_name']
-        gender= request.POST['gender']
-        id_number= request.POST['id_number']
-        place= request.POST['place']
-
-        health_member_update.full_name = full_name
-        health_member_update.gender = gender
-        health_member_update.id_number = id_number
-        health_member_update.place = place
-        health_member_update.save()
-        return HttpResponseRedirect(reverse("ViewAllHealthMembers"))
-    return render(request, "health/updateHealthMember.html",{
-        'health_member_update': health_member_update
-    })
-
-
-
-
-
-
-
-@login_required(login_url='index')
-def AttendancePresent(request):
-    if request.method == 'POST':
-        present = request.POST.getlist('checkAttendance[]')
-        for id in present:
-            attendance_member = Attendance.objects.get(id=id)
-            attendance_member.attendance="Present"
-            attendance_member.save()
-        return HttpResponseRedirect(reverse('AttendanceList'))
-
-
-
-
-
-
-
-@login_required(login_url='index')
-def deleteHealthMember(request,id):
-    health_member = church_member.objects.get(id=id)
-    if request.method == 'POST':
-        health_member.delete()
-        return HttpResponseRedirect(reverse('ViewAllHealthMembers'))
-    return render(request, "health/deleteHealthMember.html")
-
